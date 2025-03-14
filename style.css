@@ -145,12 +145,14 @@ h1 {
     background-color: #f4b1e1; /* Color para Hada */
 }
 
+/* Estilos generales para el contenedor de las cards */
 .pokemon-list {
     display: flex;
     flex-wrap: wrap;
     gap: 20px;
     justify-content: center;
     margin-top: 20px;
+    align-items: stretch; /* Hace que todas las cards tengan la misma altura */
 }
 
 /* Estilos para las cards */
@@ -162,30 +164,39 @@ h1 {
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     text-align: center;
     transition: transform 0.3s ease-in-out;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 250px; /* Fija una altura para las cards */
 }
 
-.card:hover {
-    transform: scale(1.05);
-}
-
+/* Centrar la imagen dentro de la card */
 .card img {
-    width: 100%;
+    width: 100px;
+    height: 100px;
+    object-fit: contain; /* Para que la imagen no se distorsione */
+    margin: 0 auto 10px; /* Centra la imagen y agrega margen abajo */
 }
 
+/* Aseguramos que el nombre esté correctamente alineado y no cause mucho espacio */
 .card h2 {
     font-size: 1.2rem;
     text-transform: capitalize;
     margin-top: 10px;
+    margin-bottom: 5px; /* Reducir el espacio debajo del nombre */
+    flex-grow: 0; /* Evitar que el nombre crezca y ocupe demasiado espacio */
 }
 
+/* Contenedor de los tipos dentro de la card */
 .types-container {
-    margin-top: 10px;
     display: flex;
     justify-content: center;
     gap: 5px;
     flex-wrap: wrap;
+    margin-top: auto; /* Esto asegura que los tipos estén justo debajo del nombre */
 }
 
+/* Tipo de Pokémon */
 .type {
     padding: 5px 10px;
     border-radius: 20px;
@@ -198,14 +209,17 @@ h1 {
     margin: 3px;
 }
 
+/* Iconos de los tipos de Pokémon */
 .type i {
     font-size: 1rem;
 }
 
+/* Aseguramos que el contenedor de los tipos se alinee correctamente */
 .type:hover {
     opacity: 0.8;
 }
 
+/* Estilos para que la paginación tenga el mismo estilo */
 .pagination {
     margin-top: 30px;
 }
@@ -223,4 +237,51 @@ button {
 
 button:hover {
     background-color: #0056b3;
+}
+
+.pokemon-details {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    margin-top: 20px;
+}
+
+.pokemon-details .card {
+    background-color: white;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    width: 300px;  /* Esto ya está, lo mantenemos */
+    max-width: 400px; /* Aumentamos el tamaño máximo para que la card sea un poco más grande */
+    margin: 0 auto; /* Centramos la card en la página */
+    overflow: hidden; /* Evitamos que el contenido se desborde fuera de la card */
+    height: auto; /* Dejamos que la altura se ajuste automáticamente al contenido */
+}
+
+.pokemon-details .types-container {
+    display: flex;
+    justify-content: center;
+    gap: 5px;
+    flex-wrap: wrap;
+    margin-top: 10px; /* Añadimos un poco de margen */
+}
+
+.pokemon-details p {
+    font-size: 1rem; /* Ajustamos el tamaño de la fuente para que sea más legible */
+    line-height: 1.5; /* Añadimos espacio entre las líneas de texto */
+    text-align: left; /* Alineamos el texto a la izquierda para una mejor legibilidad */
+    margin-bottom: 10px; /* Espacio entre los párrafos */
+}
+
+/* Añadir márgenes a la imagen para evitar que se quede pegada a los bordes */
+.pokemon-details img {
+    width: 150px; /* Aumentamos el tamaño de la imagen */
+    height: 150px;
+    margin-bottom: 20px; /* Un poco de espacio debajo de la imagen */
+}
+
+.pokemon-details button {
+    margin-top: 20px;
 }

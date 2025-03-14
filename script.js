@@ -27,21 +27,23 @@ const typeStyles = {
 async function fetchPokemons() {
     const response = await fetch('https://pokeapi.co/api/v2/pokemon?limit=1000'); // Puedes ajustar el límite si es necesario
     const data = await response.json();
+    pokemonData = data.results;
     
-    // Obtener más detalles de cada Pokémon
-    const pokemonDetailsPromises = data.results.map(async (pokemon) => {
-        const pokemonResponse = await fetch(pokemon.url);
-        const pokemonDetails = await pokemonResponse.json();
+    // Obtener los detalles de cada Pokémon (incluyendo el sprite)
+    const pokemonDetailsPromises = pokemonData.map(pokemon => fetch(pokemon.url).then(res => res.json()));
+    const pokemonDetails = await Promise.all(pokemonDetailsPromises);
+
+    // Agregar los sprites y tipos a cada Pokémon
+    pokemonData = pokemonData.map((pokemon, index) => {
         return {
-            name: pokemon.name,
-            image: pokemonDetails.sprites.front_default, // Obtener la imagen del Pokémon
-            types: pokemonDetails.types.map(typeInfo => typeInfo.type.name), // Obtener los tipos del Pokémon
+            ...pokemon,
+            id: pokemonDetails[index].id,
+            sprite: pokemonDetails[index].sprites.front_default,
+            types: pokemonDetails[index].types.map(type => type.type.name)
         };
     });
 
-    // Esperar a que se obtengan los detalles de todos los Pokémon
-    pokemonData = await Promise.all(pokemonDetailsPromises);
-    displayPokemons(pokemonData); // Mostrar todos los Pokémon al inicio
+    displayPokemons(pokemonData); // Muestra todos los Pokémon al inicio
 }
 
 // Función para mostrar los Pokémon en la página
@@ -55,21 +57,15 @@ function displayPokemons(pokemons) {
 
     paginatedPokemons.forEach(pokemon => {
         const pokemonCard = document.createElement('div');
-        pokemonCard.classList.add('card');
-        
-        // Estructura de la card
+        pokemonCard.classList.add('pokemon-card');
         pokemonCard.innerHTML = `
-            <img src="${pokemon.image}" alt="${pokemon.name}">
-            <h2>${pokemon.name}</h2>
-            <div class="types-container">
-                ${pokemon.types.map(type => {
-                    const { color, icon } = typeStyles[type] || { color: '#ccc', icon: 'fas fa-question' };
-                    return `
-                        <span class="type" style="background-color: ${color};">
-                            <i class="${icon}"></i> ${type}
-                        </span>
-                    `;
-                }).join('')}
+            <div class="card" onclick="window.location.href='pokemon-details.html?id=${pokemon.id}'">
+                <img src="${pokemon.sprite}" alt="${pokemon.name}" class="pokemon-img">
+                <h2>${pokemon.name}</h2>
+                <div class="types-container">
+                    ${pokemon.types.map(type => `<div class="type" style="background-color: ${typeStyles[type].color}">
+                        <i class="${typeStyles[type].icon}"></i> ${type}</div>`).join('')}
+                </div>
             </div>
         `;
         pokemonList.appendChild(pokemonCard);
