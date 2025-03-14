@@ -4,31 +4,62 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Pokedex</title>
+    <!-- Agregar NES.css -->
+    <link rel="stylesheet" href="https://unpkg.com/nes.css/css/nes.min.css">
+    <!-- Agregar FontAwesome para los iconos -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
     <div class="container">
         <header>
             <h1>Pokédex</h1>
-            <input type="text" id="search" placeholder="Buscar Pokémon...">
-            <select id="type-filter">
-                <option value="">Filtrar por Tipo</option>
-                <option value="fire">Fuego</option>
-                <option value="water">Agua</option>
-                <option value="grass">Planta</option>
-                <option value="electric">Eléctrico</option>
-                <!-- Agrega más tipos según sea necesario -->
-            </select>
+            <div class="filters">
+                <!-- Campo de búsqueda -->
+                <input type="text" id="search" placeholder="Buscar Pokémon...">
+                
+                <!-- Filtro por tipo (cajitas) -->
+                <div class="type-buttons">
+                    <button class="nes-btn" id="all" style="background-color: #e0e0e0;">
+                        <i class="fas fa-circle"></i> Todos
+                    </button>
+                    <button class="nes-btn fire" id="fire">
+                        <i class="fas fa-fire"></i> Fuego
+                    </button>
+                    <button class="nes-btn water" id="water">
+                        <i class="fas fa-tint"></i> Agua
+                    </button>
+                    <button class="nes-btn grass" id="grass">
+                        <i class="fas fa-leaf"></i> Planta
+                    </button>
+                    <button class="nes-btn electric" id="electric">
+                        <i class="fas fa-bolt"></i> Eléctrico
+                    </button>
+                    <button class="nes-btn bug" id="bug">
+                        <i class="fas fa-bug"></i> Bicho
+                    </button>
+                    <button class="nes-btn normal" id="normal">
+                        <i class="fas fa-paw"></i> Normal
+                    </button>
+                    <button class="nes-btn poison" id="poison">
+                        <i class="fas fa-skull-crossbones"></i> Veneno
+                    </button>
+                    <!-- Agrega más tipos aquí -->
+                </div>
+            </div>
         </header>
 
+        <!-- Contenedor de los Pokémon -->
         <div class="pokemon-list" id="pokemon-list"></div>
 
+        <!-- Paginación -->
         <div class="pagination">
-            <button id="prev" onclick="changePage('prev')">Anterior</button>
-            <button id="next" onclick="changePage('next')">Siguiente</button>
+            <button class="nes-btn" id="prev" onclick="changePage('prev')">Anterior</button>
+            <button class="nes-btn" id="next" onclick="changePage('next')">Siguiente</button>
         </div>
     </div>
 
+    <!-- Script JS -->
     <script src="script.js"></script>
 </body>
 </html>

@@ -1,8 +1,8 @@
 const pokemonListContainer = document.getElementById('pokemon-list');
 const searchInput = document.getElementById('search');
-const typeFilter = document.getElementById('type-filter');
 const prevButton = document.getElementById('prev');
 const nextButton = document.getElementById('next');
+const typeButtons = document.querySelectorAll('.type-buttons button');
 
 let currentPage = 1;
 let currentType = '';
@@ -65,9 +65,12 @@ searchInput.addEventListener('input', (e) => {
     fetchPokemons(1, currentType, searchQuery);
 });
 
-typeFilter.addEventListener('change', (e) => {
-    currentType = e.target.value;
-    fetchPokemons(1, currentType, searchQuery);
+// Botones de tipo
+typeButtons.forEach(button => {
+    button.addEventListener('click', (e) => {
+        currentType = e.target.id === 'all' ? '' : e.target.id;
+        fetchPokemons(1, currentType, searchQuery);
+    });
 });
 
 fetchPokemons();
