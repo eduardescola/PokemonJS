@@ -82,35 +82,67 @@ h1 {
 }
 
 .type-buttons .fire {
-    background-color: #f08030;
+    background-color: #f08030; /* Color para Fuego */
 }
 
 .type-buttons .water {
-    background-color: #6390f0;
+    background-color: #6390f0; /* Color para Agua */
 }
 
 .type-buttons .grass {
-    background-color: #7ac74c;
+    background-color: #7ac74c; /* Color para Planta */
 }
 
 .type-buttons .electric {
-    background-color: #f7d02c;
+    background-color: #f7d02c; /* Color para Eléctrico */
 }
 
 .type-buttons .bug {
-    background-color: #a8b820;
+    background-color: #a8b820; /* Color para Bicho */
 }
 
 .type-buttons .normal {
-    background-color: #a8a878;
+    background-color: #a8a878; /* Color para Normal */
 }
 
 .type-buttons .poison {
-    background-color: #a040a0;
+    background-color: #a040a0; /* Color para Veneno */
+}
+
+.type-buttons .ice {
+    background-color: #98d8d8; /* Color para Hielo */
+}
+
+.type-buttons .fighting {
+    background-color: #c22e28; /* Color para Lucha */
 }
 
 .type-buttons .flying {
     background-color: #a890f0; /* Color para Volador */
+}
+
+.type-buttons .psychic {
+    background-color: #f85888; /* Color para Psíquico */
+}
+
+.type-buttons .rock {
+    background-color: #b8a038; /* Color para Roca */
+}
+
+.type-buttons .ghost {
+    background-color: #7b62a3; /* Color para Fantasma */
+}
+
+.type-buttons .dragon {
+    background-color: #6f35fc; /* Color para Dragón */
+}
+
+.type-buttons .steel {
+    background-color: #b7b7b7; /* Color para Acero */
+}
+
+.type-buttons .fairy {
+    background-color: #f4b1e1; /* Color para Hada */
 }
 
 .pokemon-list {

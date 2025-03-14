@@ -12,8 +12,15 @@ const typeStyles = {
     bug: { color: '#a8b820', icon: 'fas fa-bug' },
     normal: { color: '#a8a878', icon: 'fas fa-paw' },
     poison: { color: '#a040a0', icon: 'fas fa-skull-crossbones' },
-    flying: { color: '#a890f0', icon: 'fas fa-plane' },
-    // Agrega más tipos si es necesario
+    ice: { color: '#98d8d8', icon: 'fas fa-snowflake' },
+    fighting: { color: '#c22e28', icon: 'fas fa-dumbbell' },
+    flying: { color: '#a890f0', icon: 'fas fa-fighter-jet' },
+    psychic: { color: '#f85888', icon: 'fas fa-brain' },
+    rock: { color: '#b8a038', icon: 'fas fa-gem' },
+    ghost: { color: '#7b62a3', icon: 'fas fa-ghost' },
+    dragon: { color: '#6f35fc', icon: 'fas fa-dragon' },
+    steel: { color: '#b7b7b7', icon: 'fas fa-cogs' },
+    fairy: { color: '#f4b1e1', icon: 'fas fa-gem' }
 };
 
 // Función para obtener los Pokémon de la API
