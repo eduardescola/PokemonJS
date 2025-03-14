@@ -1,11 +1,13 @@
+/* Estilos generales */
 body {
-    font-family: Arial, sans-serif;
+    font-family: 'Press Start 2P', cursive;
     margin: 0;
     padding: 0;
     display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
+    justify-content: flex-start;
+    align-items: flex-start;
+    flex-direction: column;
+    min-height: 100vh;
     background-color: #f1f1f1;
 }
 
@@ -13,25 +15,147 @@ body {
     width: 80%;
     max-width: 1200px;
     text-align: center;
+    padding-top: 30px;
+    padding-bottom: 30px;
+    margin: 0 auto;
 }
 
 header {
-    margin-bottom: 20px;
+    margin-bottom: 30px;
 }
 
-input, select {
+h1 {
+    font-size: 2.5rem;
+    color: #333;
+}
+
+.filters {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 20px;
+    margin-top: 20px;
+}
+
+#search {
     padding: 10px;
-    margin: 10px;
+    font-size: 1rem;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    margin-bottom: 20px;
+    width: 200px;
+}
+
+.suggestions-container {
+    position: relative;
+    top: 0; /* Dejarlo en 0 para que quede justo debajo del input */
+    left: 0;
+    width: 100%;  /* Ajusta el ancho al tamaño del input */
+    max-height: 100px;  /* Limitar la altura de la caja de sugerencias */
+    overflow-y: auto;  /* Permitir desplazamiento si hay muchas sugerencias */
+    background-color: white;
+    border: 1px solid #ccc;
+    border-top: none;  /* Eliminar el borde superior para que quede unido al input */
+    z-index: 1000;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);  /* Agregar sombra para mayor visibilidad */
+    margin-top: 5px;  /* Un pequeño margen entre el input y la lista */
+    border-radius: 5px;  /* Bordes redondeados */
+}
+
+.suggestion-item {
+    padding: 8px 12px;
+    cursor: pointer;
     font-size: 1rem;
 }
 
+.suggestion-item:hover {
+    background-color: #f0f0f0;
+}
+
+.suggestion-item.active {
+    background-color: #d3d3d3;
+}
+
+.type-buttons button {
+    margin: 5px;
+    cursor: pointer;
+}
+
+.type-buttons .fire {
+    background-color: #f08030; /* Color para Fuego */
+}
+
+.type-buttons .water {
+    background-color: #6390f0; /* Color para Agua */
+}
+
+.type-buttons .grass {
+    background-color: #7ac74c; /* Color para Planta */
+}
+
+.type-buttons .electric {
+    background-color: #f7d02c; /* Color para Eléctrico */
+}
+
+.type-buttons .bug {
+    background-color: #a8b820; /* Color para Bicho */
+}
+
+.type-buttons .normal {
+    background-color: #a8a878; /* Color para Normal */
+}
+
+.type-buttons .poison {
+    background-color: #a040a0; /* Color para Veneno */
+}
+
+.type-buttons .ice {
+    background-color: #98d8d8; /* Color para Hielo */
+}
+
+.type-buttons .fighting {
+    background-color: #c22e28; /* Color para Lucha */
+}
+
+.type-buttons .flying {
+    background-color: #a890f0; /* Color para Volador */
+}
+
+.type-buttons .psychic {
+    background-color: #f85888; /* Color para Psíquico */
+}
+
+.type-buttons .rock {
+    background-color: #b8a038; /* Color para Roca */
+}
+
+.type-buttons .ghost {
+    background-color: #7b62a3; /* Color para Fantasma */
+}
+
+.type-buttons .dragon {
+    background-color: #6f35fc; /* Color para Dragón */
+}
+
+.type-buttons .steel {
+    background-color: #b7b7b7; /* Color para Acero */
+}
+
+.type-buttons .fairy {
+    background-color: #f4b1e1; /* Color para Hada */
+}
+
+/* Estilos generales para el contenedor de las cards */
 .pokemon-list {
     display: flex;
     flex-wrap: wrap;
     gap: 20px;
     justify-content: center;
+    margin-top: 20px;
+    align-items: stretch; /* Hace que todas las cards tengan la misma altura */
 }
 
+/* Estilos para las cards */
 .card {
     background-color: white;
     padding: 15px;
@@ -39,22 +163,125 @@ input, select {
     width: 150px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     text-align: center;
+    transition: transform 0.3s ease-in-out;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 250px; /* Fija una altura para las cards */
 }
 
+/* Centrar la imagen dentro de la card */
 .card img {
-    width: 100%;
+    width: 100px;
+    height: 100px;
+    object-fit: contain; /* Para que la imagen no se distorsione */
+    margin: 0 auto 10px; /* Centra la imagen y agrega margen abajo */
 }
 
+/* Aseguramos que el nombre esté correctamente alineado y no cause mucho espacio */
 .card h2 {
     font-size: 1.2rem;
+    text-transform: capitalize;
+    margin-top: 10px;
+    margin-bottom: 5px; /* Reducir el espacio debajo del nombre */
+    flex-grow: 0; /* Evitar que el nombre crezca y ocupe demasiado espacio */
 }
 
+/* Contenedor de los tipos dentro de la card */
+.types-container {
+    display: flex;
+    justify-content: center;
+    gap: 5px;
+    flex-wrap: wrap;
+    margin-top: auto; /* Esto asegura que los tipos estén justo debajo del nombre */
+}
+
+/* Tipo de Pokémon */
+.type {
+    padding: 5px 10px;
+    border-radius: 20px;
+    color: white;
+    font-size: 0.9rem;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+    margin: 3px;
+}
+
+/* Iconos de los tipos de Pokémon */
+.type i {
+    font-size: 1rem;
+}
+
+/* Aseguramos que el contenedor de los tipos se alinee correctamente */
+.type:hover {
+    opacity: 0.8;
+}
+
+/* Estilos para que la paginación tenga el mismo estilo */
 .pagination {
-    margin-top: 20px;
+    margin-top: 30px;
 }
 
 button {
     padding: 10px 20px;
     font-size: 1rem;
     cursor: pointer;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    margin: 0 10px;
+}
+
+button:hover {
+    background-color: #0056b3;
+}
+
+.pokemon-details {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    margin-top: 20px;
+}
+
+.pokemon-details .card {
+    background-color: white;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    width: 300px;  /* Esto ya está, lo mantenemos */
+    max-width: 400px; /* Aumentamos el tamaño máximo para que la card sea un poco más grande */
+    margin: 0 auto; /* Centramos la card en la página */
+    overflow: hidden; /* Evitamos que el contenido se desborde fuera de la card */
+    height: auto; /* Dejamos que la altura se ajuste automáticamente al contenido */
+}
+
+.pokemon-details .types-container {
+    display: flex;
+    justify-content: center;
+    gap: 5px;
+    flex-wrap: wrap;
+    margin-top: 10px; /* Añadimos un poco de margen */
+}
+
+.pokemon-details p {
+    font-size: 1rem; /* Ajustamos el tamaño de la fuente para que sea más legible */
+    line-height: 1.5; /* Añadimos espacio entre las líneas de texto */
+    text-align: left; /* Alineamos el texto a la izquierda para una mejor legibilidad */
+    margin-bottom: 10px; /* Espacio entre los párrafos */
+}
+
+/* Añadir márgenes a la imagen para evitar que se quede pegada a los bordes */
+.pokemon-details img {
+    width: 150px; /* Aumentamos el tamaño de la imagen */
+    height: 150px;
+    margin-bottom: 20px; /* Un poco de espacio debajo de la imagen */
+}
+
+.pokemon-details button {
+    margin-top: 20px;
 }
