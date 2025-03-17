@@ -168,6 +168,7 @@ h1 {
     flex-direction: column;
     justify-content: space-between;
     height: 250px; /* Fija una altura para las cards */
+    border-style: solid;
 }
 
 /* Centrar la imagen dentro de la card */
@@ -206,7 +207,7 @@ h1 {
     align-items: center;
     justify-content: center;
     gap: 5px;
-    margin: 3px;
+    margin-bottom: 5px;
 }
 
 /* Iconos de los tipos de Pokémon */
