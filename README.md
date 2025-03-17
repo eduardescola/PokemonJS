@@ -19,7 +19,7 @@ Una aplicación web que muestra una lista de Pokémon usando la API de PokéAPI.
 
 1. Clona este repositorio:
     ```bash
-    git clone https://github.com/tu_usuario/pokedex.git
+    git clone https://github.com/eduardescola/PokemonJS.git
     ```
 
 2. Abre el archivo `index.html` en tu navegador.
@@ -39,11 +39,6 @@ No es necesario instalar nada más, ya que las dependencias se cargan desde una 
 - `pokemon-details.html`: Página con los detalles de un Pokémon.
 - `style.css`: Archivo CSS con los estilos personalizados.
 - `script.js`: Lógica en JavaScript que maneja la interacción con la API y la manipulación del DOM.
-
-## Capturas de Pantalla
-
-![Pokedex](https://via.placeholder.com/600x400.png)  
-_Ejemplo de la página principal de la Pokédex._
 
 ## Contribuciones
 
