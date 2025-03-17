@@ -19,7 +19,7 @@ Una aplicación web que muestra una lista de Pokémon usando la API de PokéAPI.
 
 1. Clona este repositorio:
     ```bash
-    git clone https://github.com/tu_usuario/pokedex.git
+    git clone https://github.com/eduardescola/PokemonJS.git
     ```
 
 2. Abre el archivo `index.html` en tu navegador.
