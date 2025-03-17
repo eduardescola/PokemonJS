@@ -1,5 +1,5 @@
 let pokemonData = []; // Almacena los datos de los Pokémon obtenidos de la API
-let filteredPokemons = []; // Pokémon filtrados por búsqueda o tipo
+let filteredPokemons = []; // Pokémon filtrados por búsqueda o tipo (para mostrar en la UI)
 let currentPage = 1; // Página actual
 const perPage = 20; // Número de Pokémon por página
 
@@ -20,20 +20,20 @@ const typeStyles = {
     ghost: { color: '#7b62a3', icon: 'fas fa-ghost' },
     dragon: { color: '#6f35fc', icon: 'fas fa-dragon' },
     steel: { color: '#b7b7b7', icon: 'fas fa-cogs' },
-    fairy: { color: '#f4b1e1', icon: 'fas fa-gem' }
+    fairy: { color: '#f4b1e1', icon: 'fas fa-gem' },
+    dark: { color: '#705848', icon: 'fas fa-moon' },
+    ground: { color: '#e0c068', icon: 'fas fa-mountain' },
 };
 
 // Función para obtener los Pokémon de la API
 async function fetchPokemons() {
-    const response = await fetch('https://pokeapi.co/api/v2/pokemon?limit=1000'); // Puedes ajustar el límite si es necesario
+    const response = await fetch('https://pokeapi.co/api/v2/pokemon?limit=1000');
     const data = await response.json();
     pokemonData = data.results;
-    
-    // Obtener los detalles de cada Pokémon (incluyendo el sprite)
+
     const pokemonDetailsPromises = pokemonData.map(pokemon => fetch(pokemon.url).then(res => res.json()));
     const pokemonDetails = await Promise.all(pokemonDetailsPromises);
 
-    // Agregar los sprites y tipos a cada Pokémon
     pokemonData = pokemonData.map((pokemon, index) => {
         return {
             ...pokemon,
@@ -43,10 +43,13 @@ async function fetchPokemons() {
         };
     });
 
-    displayPokemons(pokemonData); // Muestra todos los Pokémon al inicio
+    // Guardar los datos completos en localStorage
+    localStorage.setItem('pokemons', JSON.stringify(pokemonData));
+    filteredPokemons = [...pokemonData]; // Inicializa con todos los Pokémon
+    displayPokemons(pokemonData); // Muestra todos los Pokémon al cargar
 }
 
-// Función para mostrar los Pokémon en la página
+// Función para mostrar los Pokémon paginados
 function displayPokemons(pokemons) {
     const pokemonList = document.getElementById('pokemon-list');
     pokemonList.innerHTML = ''; // Limpiar la lista antes de mostrar
@@ -55,16 +58,28 @@ function displayPokemons(pokemons) {
     const end = start + perPage;
     const paginatedPokemons = pokemons.slice(start, end);
 
+    if (paginatedPokemons.length === 0) {
+        pokemonList.innerHTML = "No hay Pokémon disponibles para mostrar en esta página.";
+        return;
+    }
+
     paginatedPokemons.forEach(pokemon => {
         const pokemonCard = document.createElement('div');
         pokemonCard.classList.add('pokemon-card');
-        pokemonCard.innerHTML = `
+        pokemonCard.innerHTML = `        
             <div class="card" onclick="window.location.href='pokemon-details.html?id=${pokemon.id}'">
+                <div class="pokemon-actions">
+                    <button class="edit-btn" onclick="editPokemon(event, ${pokemon.id})">
+                        <i class="fas fa-pencil-alt"></i>
+                    </button>
+                    <button class="delete-btn" onclick="deletePokemon(event, ${pokemon.id})">
+                        <i class="fas fa-trash-alt"></i>
+                    </button>
+                </div>
                 <img src="${pokemon.sprite}" alt="${pokemon.name}" class="pokemon-img">
                 <h2>${pokemon.name}</h2>
                 <div class="types-container">
-                    ${pokemon.types.map(type => `<div class="type" style="background-color: ${typeStyles[type].color}">
-                        <i class="${typeStyles[type].icon}"></i> ${type}</div>`).join('')}
+                    ${pokemon.types.map(type => `<div class="type" style="background-color: ${typeStyles[type].color}"><i class="${typeStyles[type].icon}"></i> ${type}</div>`).join('')}
                 </div>
             </div>
         `;
@@ -72,41 +87,59 @@ function displayPokemons(pokemons) {
     });
 }
 
-// Función para manejar la búsqueda
+// Función para buscar Pokémon
 function searchPokemons() {
     const searchInput = document.getElementById('search').value.toLowerCase();
     const suggestionsContainer = document.getElementById('suggestions');
-    
+
     if (searchInput === '') {
         suggestionsContainer.innerHTML = ''; // Limpiar las sugerencias si no hay texto
-        filteredPokemons = pokemonData; // Restaurar los Pokémon filtrados
+        filteredPokemons = [...pokemonData]; // Restaurar los Pokémon filtrados
+        currentPage = 1; // Reiniciar la página a la 1
         displayPokemons(pokemonData); // Mostrar todos los Pokémon
         return;
     }
 
-    // Filtrar los Pokémon basados en el texto de búsqueda
+    // Filtrar los Pokémon por nombre
     filteredPokemons = pokemonData.filter(pokemon => pokemon.name.toLowerCase().includes(searchInput));
-
-    // Mostrar las sugerencias debajo del campo de búsqueda
-    suggestionsContainer.innerHTML = '';
-    filteredPokemons.forEach(pokemon => {
-        const suggestionItem = document.createElement('div');
-        suggestionItem.classList.add('suggestion-item');
-        suggestionItem.textContent = pokemon.name;
-        suggestionItem.onclick = () => {
-            document.getElementById('search').value = pokemon.name;
-            searchPokemons(); // Actualizar los resultados
-            suggestionsContainer.innerHTML = ''; // Limpiar las sugerencias
-        };
-        suggestionsContainer.appendChild(suggestionItem);
-    });
+    currentPage = 1; // Reiniciar la página a la 1
 
     displayPokemons(filteredPokemons); // Mostrar los Pokémon filtrados
 }
 
+// Función para editar Pokémon
+function editPokemon(event, id) {
+    event.stopPropagation(); // Prevenir que el clic en el botón de editar dispare el clic en la tarjeta
+    window.location.href = `edit.html?id=${id}`;  // Redirigir a la página de edición
+}
+
+// Función para eliminar un Pokémon
+function deletePokemon(event, id) {
+    event.stopPropagation();
+    const confirmDelete = confirm('¿Estás seguro de que quieres eliminar este Pokémon?');
+    if (confirmDelete) {
+        // Eliminar el Pokémon de la lista
+        pokemonData = pokemonData.filter(pokemon => pokemon.id !== id);
+        filteredPokemons = filteredPokemons.filter(pokemon => pokemon.id !== id);
+
+        // Actualizar el localStorage
+        localStorage.setItem('pokemons', JSON.stringify(pokemonData));
+
+        // Asegurar que la página actual es válida después de la eliminación
+        const maxPages = Math.ceil(filteredPokemons.length / perPage);
+        if (currentPage > maxPages) {
+            currentPage = maxPages; // Ajustar la página actual
+        }
+
+        displayPokemons(filteredPokemons); // Mostrar los Pokémon actualizados
+    }
+}
+
 // Función para cambiar de página
 function changePage(direction) {
-    if (direction === 'next' && (currentPage * perPage) < filteredPokemons.length) {
+    const maxPages = Math.ceil(filteredPokemons.length / perPage);
+
+    if (direction === 'next' && currentPage < maxPages) {
         currentPage++;
     } else if (direction === 'prev' && currentPage > 1) {
         currentPage--;
@@ -118,22 +151,31 @@ function changePage(direction) {
 // Función para filtrar los Pokémon por tipo
 function filterByType(type) {
     if (type === 'all') {
-        filteredPokemons = pokemonData; // Mostrar todos los Pokémon
+        filteredPokemons = [...pokemonData]; // Mostrar todos los Pokémon
     } else {
-        // Filtrar los Pokémon por tipo
-        const filtered = pokemonData.filter(pokemon => pokemon.types.includes(type));
-        filteredPokemons = filtered;
+        filteredPokemons = pokemonData.filter(pokemon => pokemon.types.includes(type)); // Filtrar por tipo
     }
-    displayPokemons(filteredPokemons);
+
+    currentPage = 1; // Reiniciar la página a la 1
+    displayPokemons(filteredPokemons); // Mostrar los Pokémon filtrados
 }
 
-// Función para manejar los botones de tipo
+// Manejar los botones de tipo
 document.querySelectorAll('.type-buttons button').forEach(button => {
     button.addEventListener('click', () => {
         const type = button.id;
-        filterByType(type); // Filtrar los Pokémon por el tipo seleccionado
+        filterByType(type); // Filtrar los Pokémon por tipo
     });
 });
 
-// Llamar a fetchPokemons para cargar los datos cuando se carga la página
-fetchPokemons();
+// Cargar Pokémon desde localStorage o desde la API
+window.onload = () => {
+    const storedPokemons = JSON.parse(localStorage.getItem('pokemons'));
+    if (storedPokemons) {
+        pokemonData = storedPokemons;
+        filteredPokemons = [...pokemonData]; // Inicializa el filtrado con todos los Pokémon
+        displayPokemons(pokemonData); // Mostrar todos los Pokémon al cargar
+    } else {
+        fetchPokemons(); // Si no hay Pokémon en el almacenamiento, los cargamos desde la API
+    }
+}

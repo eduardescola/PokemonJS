@@ -145,6 +145,14 @@ h1 {
     background-color: #f4b1e1; /* Color para Hada */
 }
 
+.type-buttons .dark {
+    background-color: #705848; /* Color para Siniestro */
+}
+
+.type-buttons .ground {
+    background-color: #e0c068; /* Color para Tierra */
+}
+
 /* Estilos generales para el contenedor de las cards */
 .pokemon-list {
     display: flex;
@@ -169,6 +177,61 @@ h1 {
     justify-content: space-between;
     height: 250px; /* Fija una altura para las cards */
     border-style: solid;
+    position: relative;
+}
+
+/* Contenedor de las acciones (los iconos) */
+.pokemon-actions {
+    position: absolute;  /* Necesario para que los botones se ubiquen en las esquinas */
+    top: 5px;            /* Alineación al borde superior */
+    left: 5px;           /* Alineación al borde izquierdo */
+    right: 5px;          /* Alineación al borde derecho */
+    bottom: 5px;         /* Alineación al borde inferior */
+    display: flex;
+    justify-content: space-between;
+    width: calc(100% - 10px);  /* Aseguramos que ocupe todo el ancho de la card */
+    z-index: 10;          /* Asegura que los botones estén por encima del contenido */
+}
+
+/* Estilo de los botones (muy pequeños) */
+.pokemon-actions button {
+    background: transparent;   /* Fondo transparente */
+    padding: 5px;              /* Paddings pequeños */
+    cursor: pointer;          /* Cursor pointer para hacer clic */
+    font-size: 0.8rem;         /* Tamaño pequeño */
+    transition: transform 0.2s ease-in-out;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 25px;               /* Hacemos que los botones sean pequeños */
+    height: 25px;              /* Botones pequeños */
+    border-radius: 50%;        /* Redondeamos los botones */
+    background-color: rgba(255, 255, 255, 0.5); /* Fondo semi-transparente para visibilidad */
+}
+
+/* Efecto al pasar el ratón sobre los botones */
+.pokemon-actions button:hover {
+    transform: scale(1.2);      /* Crece un poco cuando el ratón pasa por encima */
+}
+
+/* Botón de editar */
+.pokemon-actions .edit-btn {
+    background-color: #ffcc00; /* Amarillo para el botón de editar */
+}
+
+/* Botón de eliminar */
+.pokemon-actions .delete-btn {
+    background-color: #ff4c4c; /* Rojo para el botón de eliminar */
+}
+
+/* Íconos dentro de los botones */
+.pokemon-actions i {
+    font-size: 1rem;  /* Hacemos los iconos más pequeños */
+}
+
+/* Estilo para los iconos cuando se pasa el ratón */
+.pokemon-actions button:hover i {
+    color: #fff; /* Cambiamos el color del icono al pasar el ratón */
 }
 
 /* Centrar la imagen dentro de la card */

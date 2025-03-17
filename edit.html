@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Editar Pokémon</title>
+    <link rel="stylesheet" href="https://unpkg.com/nes.css/css/nes.min.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Editar Pokémon</h1>
+            <button class="nes-btn" onclick="window.location.href='index.html'">Volver a la Pokédex</button>
+        </header>
+
+        <div id="edit-form-container">
+            <!-- Aquí se llenarán los datos del Pokémon para editar -->
+        </div>
+    </div>
+
+    <script>
+        // Obtener el ID del Pokémon desde la URL
+        const pokemonId = new URLSearchParams(window.location.search).get('id');
+        const storedPokemons = JSON.parse(localStorage.getItem('pokemons'));
+        // Buscar el Pokémon en los datos
+        const pokemonToEdit = storedPokemons.find(pokemon => pokemon.id == pokemonId);
+
+        // Mostrar el formulario de edición con los datos actuales del Pokémon
+        if (pokemonToEdit) {
+            const formContainer = document.getElementById('edit-form-container');
+            formContainer.innerHTML = `
+                <form id="edit-form">
+                    <label for="name">Nombre:</label>
+                    <input type="text" id="name" value="${pokemonToEdit.name}" required><br>
+                    <label for="types">Tipos:</label>
+                    <input type="text" id="types" value="${pokemonToEdit.types.join(', ')}" required><br>
+                    <button type="submit" class="nes-btn">Guardar Cambios</button>
+                </form>
+            `;
+
+            // Manejo del envío del formulario para guardar los cambios
+            document.getElementById('edit-form').addEventListener('submit', function(event) {
+                event.preventDefault();
+                const updatedName = document.getElementById('name').value;
+                const updatedTypes = document.getElementById('types').value.split(',').map(type => type.trim());
+
+                // Actualizar los datos en pokemonData y en filteredPokemons
+                pokemonToEdit.name = updatedName;
+                pokemonToEdit.types = updatedTypes;
+                
+                // Volver a la página principal con los datos actualizados
+                alert('Pokémon actualizado con éxito');
+                window.location.href = 'index.html';  // Redirigir de vuelta a la página principal
+            });
+        } else {
+            console.log('No se encontró el Pokémon con el ID proporcionado.');
+        }
+    </script>
+</body>
+</html>
