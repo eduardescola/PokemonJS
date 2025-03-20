@@ -87,6 +87,33 @@ function displayPokemons(pokemons) {
     });
 }
 
+// Función para ir a una página específica
+function goToPage() {
+    const pageInput = document.getElementById('page-input').value;
+    const pageNumber = parseInt(pageInput, 10);
+    
+    // Comprobar si el número de página es válido
+    if (pageNumber >= 1 && pageNumber <= Math.ceil(filteredPokemons.length / perPage)) {
+        currentPage = pageNumber;
+        displayPokemons(filteredPokemons); // Mostrar los Pokémon de la nueva página
+        updatePageInfo(); // Actualizar la visualización de la página actual
+    } else {
+        alert("Número de página inválido");
+    }
+}
+
+// Función para actualizar la información de la página
+function updatePageInfo() {
+    const pageInfo = document.getElementById('current-page');
+    pageInfo.textContent = `Página Actual: ${currentPage}`;
+}
+
+// Llamar a `displayPokemons` al cargar la página para mostrar la primera página de Pokémon
+document.addEventListener('DOMContentLoaded', () => {
+    displayPokemons(filteredPokemons);
+    updatePageInfo();
+});
+
 // Función para buscar Pokémon
 function searchPokemons() {
     const searchInput = document.getElementById('search').value.toLowerCase();
@@ -162,6 +189,7 @@ function changePage(direction) {
     }
 
     displayPokemons(filteredPokemons); // Mostrar los Pokémon de la nueva página
+    updatePageInfo(); // Actualizar la visualización de la página actual
 }
 
 // Función para filtrar los Pokémon por tipo
