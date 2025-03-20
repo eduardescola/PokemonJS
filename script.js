@@ -184,6 +184,18 @@ document.querySelectorAll('.type-buttons button').forEach(button => {
     });
 });
 
+// Función para eliminar los datos cacheados y recargar la versión original de la API
+function clearCache() {
+    // Eliminar los Pokémon cacheados del localStorage
+    localStorage.removeItem('pokemons');
+
+    // Mostrar un mensaje al usuario
+    alert("Caché eliminado. Cargando la versión original de la API...");
+
+    // Recargar la página para cargar los datos originales de la API
+    window.location.reload();
+}
+
 // Cargar Pokémon desde localStorage o desde la API
 window.onload = () => {
     const storedPokemons = JSON.parse(localStorage.getItem('pokemons'));
