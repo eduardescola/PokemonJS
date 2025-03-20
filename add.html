@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Añadir Pokémon</title>
+    <link rel="stylesheet" href="https://unpkg.com/nes.css/css/nes.min.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Añadir Pokémon</h1>
+        </header>
+
+        <form id="add-pokemon-form">
+            <div class="nes-field">
+                <label for="name">Nombre</label>
+                <input type="text" id="name" class="nes-input" required>
+            </div>
+            
+            <div class="nes-field">
+                <label for="types">Tipos</label>
+                <input type="text" id="types" class="nes-input" placeholder="Ej: fire, water" required>
+            </div>
+
+            <div class="nes-field">
+                <label for="sprite">URL de la Imagen</label>
+                <input type="url" id="sprite" class="nes-input" placeholder="URL de la imagen" required>
+            </div>
+
+            <button type="submit" class="nes-btn is-primary">Añadir Pokémon</button>
+        </form>
+        
+        <br>
+        <a href="index.html" class="nes-btn is-error">Volver a la Pokedex</a>
+    </div>
+
+    <script >
+        document.getElementById('add-pokemon-form').addEventListener('submit', function(event) {
+            event.preventDefault(); // Prevenir el comportamiento por defecto de enviar el formulario
+
+            // Obtener los valores de los campos
+            const name = document.getElementById('name').value.trim().toLowerCase();
+            const types = document.getElementById('types').value.trim().split(',').map(type => type.trim().toLowerCase());
+            const sprite = document.getElementById('sprite').value.trim();
+
+            if (!name || !types.length || !sprite) {
+                alert('Por favor, completa todos los campos.');
+                return;
+            }
+
+            // Crear el objeto del nuevo Pokémon
+            const newPokemon = {
+                name: name,
+                types: types,
+                sprite: sprite,
+                id: Date.now(), // Usar el timestamp como ID único (esto es solo un ejemplo)
+            };
+
+            // Obtener los datos actuales de Pokémon desde el localStorage
+            const pokemonData = JSON.parse(localStorage.getItem('pokemons')) || [];
+
+            // Añadir el nuevo Pokémon a la lista
+            pokemonData.push(newPokemon);
+
+            // Guardar los datos actualizados en el localStorage
+            localStorage.setItem('pokemons', JSON.stringify(pokemonData));
+
+            // Redirigir a la Pokedex
+            window.location.href = 'index.html';
+        });
+    </script>
+</body>
+</html>

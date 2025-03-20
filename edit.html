@@ -42,13 +42,26 @@
             // Manejo del envío del formulario para guardar los cambios
             document.getElementById('edit-form').addEventListener('submit', function(event) {
                 event.preventDefault();
+
                 const updatedName = document.getElementById('name').value;
                 const updatedTypes = document.getElementById('types').value.split(',').map(type => type.trim());
 
                 // Actualizar los datos en pokemonData y en filteredPokemons
                 pokemonToEdit.name = updatedName;
                 pokemonToEdit.types = updatedTypes;
-                
+
+                // Guardar los datos actualizados en el localStorage
+                const storedPokemons = JSON.parse(localStorage.getItem('pokemons'));
+                const updatedPokemons = storedPokemons.map(pokemon => {
+                    if (pokemon.id === pokemonToEdit.id) {
+                        return pokemonToEdit;
+                    }
+                    return pokemon;
+                });
+
+                // Guardar los datos actualizados en localStorage
+                localStorage.setItem('pokemons', JSON.stringify(updatedPokemons));
+
                 // Volver a la página principal con los datos actualizados
                 alert('Pokémon actualizado con éxito');
                 window.location.href = 'index.html';  // Redirigir de vuelta a la página principal

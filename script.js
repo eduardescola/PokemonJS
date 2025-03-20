@@ -104,7 +104,23 @@ function searchPokemons() {
     filteredPokemons = pokemonData.filter(pokemon => pokemon.name.toLowerCase().includes(searchInput));
     currentPage = 1; // Reiniciar la página a la 1
 
-    displayPokemons(filteredPokemons); // Mostrar los Pokémon filtrados
+    // Mostrar sugerencias
+    suggestionsContainer.innerHTML = ''; // Limpiar las sugerencias previas
+    filteredPokemons.slice(0, 5).forEach(pokemon => { // Mostrar hasta 5 sugerencias
+        const suggestionItem = document.createElement('div');
+        suggestionItem.classList.add('suggestion-item');
+        suggestionItem.textContent = pokemon.name;
+        suggestionItem.onclick = () => {
+            document.getElementById('search').value = pokemon.name; // Rellenar el campo con el nombre seleccionado
+            suggestionsContainer.innerHTML = ''; // Limpiar las sugerencias al seleccionar
+            filteredPokemons = [pokemon]; // Solo mostrar el Pokémon seleccionado
+            displayPokemons(filteredPokemons); // Mostrar el Pokémon seleccionado
+        };
+        suggestionsContainer.appendChild(suggestionItem);
+    });
+
+    // Mostrar los Pokémon filtrados
+    displayPokemons(filteredPokemons);
 }
 
 // Función para editar Pokémon
