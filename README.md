@@ -48,7 +48,3 @@ Las contribuciones son bienvenidas. Si deseas contribuir a este proyecto:
 2. Crea una rama (`git checkout -b feature/nueva-caracteristica`).
 3. Realiza tus cambios y haz un commit (`git commit -am 'Agregada nueva característica'`).
 4. Envía un pull request para revisar tus cambios.
-
-## Licencia
-
-Este proyecto está bajo la Licencia MIT. Consulta el archivo [LICENSE](LICENSE) para más detalles.
