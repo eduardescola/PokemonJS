@@ -36,18 +36,6 @@ body {
     animation: rotatePokeball 3s linear infinite;
 }
 
-/* La mitad blanca de la pokébola */
-.pokeball::after {
-    content: '';
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    width: 50%;
-    height: 50%;
-    border-radius: 50%;
-    transform: translate(-50%, -50%);
-}
-
 /* Animación de rotación */
 @keyframes rotatePokeball {
     0% {

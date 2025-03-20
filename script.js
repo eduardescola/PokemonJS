@@ -196,12 +196,39 @@ function clearCache() {
     window.location.reload();
 }
 
+// Función para obtener un Pokémon aleatorio
+function getRandomPokemon() {
+    // Obtener la lista de Pokémon desde el localStorage
+    const pokemons = JSON.parse(localStorage.getItem('pokemons'));
+
+    // Verificar si hay Pokémon almacenados
+    if (!pokemons || pokemons.length === 0) {
+        console.error("No se encontraron Pokémon en el almacenamiento.");
+        return null; // Si no hay Pokémon, devuelve null
+    }
+
+    // Seleccionar un índice aleatorio entre 0 y el número total de Pokémon
+    const randomIndex = Math.floor(Math.random() * pokemons.length);
+
+    // Devolver el Pokémon aleatorio
+    return pokemons[randomIndex];
+}
+
+// Función que redirige a la página de detalles del Pokémon aleatorio
+function showRandomPokemon() {
+    const randomPokemon = getRandomPokemon();
+    if (randomPokemon) {
+        // Redirigir a la página de detalles con el ID del Pokémon aleatorio
+        window.location.href = `pokemon-details.html?id=${randomPokemon.id}`;
+    }
+}
+
 // Cargar Pokémon desde localStorage o desde la API
 window.onload = () => {
     // Muestra el loading al cargar la página
     const loadingContainer = document.getElementById('loading');
     loadingContainer.style.display = 'flex';
-    
+
     const storedPokemons = JSON.parse(localStorage.getItem('pokemons'));
     if (storedPokemons) {
         pokemonData = storedPokemons;
