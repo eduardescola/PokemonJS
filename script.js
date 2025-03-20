@@ -198,6 +198,10 @@ function clearCache() {
 
 // Cargar Pokémon desde localStorage o desde la API
 window.onload = () => {
+    // Muestra el loading al cargar la página
+    const loadingContainer = document.getElementById('loading');
+    loadingContainer.style.display = 'flex';
+    
     const storedPokemons = JSON.parse(localStorage.getItem('pokemons'));
     if (storedPokemons) {
         pokemonData = storedPokemons;
@@ -206,4 +210,9 @@ window.onload = () => {
     } else {
         fetchPokemons(); // Si no hay Pokémon en el almacenamiento, los cargamos desde la API
     }
+
+    // Después de 3 segundos, oculta el contenedor de carga (Pokébola)
+    setTimeout(() => {
+        loadingContainer.style.display = 'none';
+    }, 3000); // 3 segundos de espera para simular el tiempo de carga
 }
