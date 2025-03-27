@@ -50,7 +50,13 @@
         function displayPokemonDetails(pokemon) {
             const pokemonDetails = document.getElementById('pokemon-details');
             
-            const typesHTML = pokemon.types.map(type => `<span class="type" style="background-color: ${typeStyles[type.type.name].color}">${type.type.name}</span>`).join(' ');
+            // Asegurarse de que los tipos existan en el objeto typeStyles
+            const typesHTML = pokemon.types.map(type => {
+                const typeName = type.type.name;
+                // Verifica si el tipo existe en typeStyles
+                const typeStyle = typeStyles[typeName] || { color: '#ccc' }; // Color predeterminado si no existe
+                return `<span class="type" style="background-color: ${typeStyle.color}">${typeName}</span>`;
+            }).join(' ');
 
             pokemonDetails.innerHTML = `
                 <div class="card">
@@ -65,6 +71,7 @@
                 </div>
             `;
         }
+
 
         // Llamar a la función para obtener los detalles del Pokémon
         fetchPokemonDetails(pokemonId);
